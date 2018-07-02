@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+
+
+<struts-config>
+    
+    <message-resources parameter="com.myapp.msg.msg"/>
+    
+    <form-beans>
+        <form-bean name="BookForm" type="com.myapp.formBeans.BookForm"/>
+        <form-bean name="LoginForm" type="com.myapp.formBeans.LoginForm"/>
+        <form-bean name="RegisterForm" type="com.myapp.formBeans.RegisterForm"/>
+        
+    </form-beans>
+    
+    <global-exceptions>
+    
+    </global-exceptions>
+
+    <global-forwards>
+        <forward name="welcome"  path="/Welcome.do"/>
+        <forward name="success" path="/success.jsp"/>
+        <forward name="userHome" path="/user/home.jsp"/>
+        <forward name="book" path="/user/book.jsp"/>
+    </global-forwards>
+
+    <action-mappings>
+        <action path="/Welcome" forward="/welcomeStruts.jsp"/>
+        <action input="/registerForm.jsp"
+		path="/register"
+		name="RegisterForm"
+		type="com.myapp.actions.RegisterAction"
+		scope="session"
+		validate="true">
+        </action>
+        
+        <action input="/index.jsp" 
+                name="LoginForm" 
+                path="/login" 
+                scope="session" 
+                type="com.myapp.actions.LoginAction" 
+                validate="true"/>
+        
+        <action input="/user/book.jsp"
+                name="BookForm"
+                path="/book"
+                scope="session"
+                type="com.myapp.actions.BookAction"
+                validate="true"/>
+        
+    </action-mappings>
+     
+</struts-config>
