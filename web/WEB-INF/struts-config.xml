@@ -13,7 +13,6 @@
         <form-bean name="BookForm" type="com.myapp.formBeans.BookForm"/>
         <form-bean name="LoginForm" type="com.myapp.formBeans.LoginForm"/>
         <form-bean name="RegisterForm" type="com.myapp.formBeans.RegisterForm"/>
-        
     </form-beans>
     
     <global-exceptions>
@@ -36,6 +35,11 @@
 		scope="session"
 		validate="true">
         </action>
+        <action input="/user/train.jsp" 
+                name="BookForm" 
+                path="/train" 
+                scope="session" 
+                type="com.myapp.actions.TrainAction"/>
         
         <action input="/index.jsp" 
                 name="LoginForm" 

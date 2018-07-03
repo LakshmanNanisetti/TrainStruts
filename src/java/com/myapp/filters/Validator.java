@@ -31,7 +31,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Administrator
  */
-@WebFilter(filterName = "Validator", urlPatterns = {"/user"})
+//@WebFilter(filterName = "Validator", urlPatterns = {"/user"})
 public class Validator implements Filter {
     
     private static final boolean debug = false;
@@ -135,27 +135,7 @@ public class Validator implements Filter {
      */
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
-            throws IOException, ServletException {
-        
-        if (debug) {
-            log("Validator:doFilter()");
-        }
-
-        // Create wrappers for the request and response objects.
-        // Using these, you can extend the capabilities of the
-        // request and response, for example, allow setting parameters
-        // on the request before sending the request to the rest of the filter chain,
-        // or keep track of the cookies that are set on the response.
-        //
-        // Caveat: some servers do not handle wrappers very well for forward or
-        // include requests.
-        RequestWrapper wrappedRequest = new RequestWrapper((HttpServletRequest) request);
-        ResponseWrapper wrappedResponse = new ResponseWrapper((HttpServletResponse) response);
-        
-        doBeforeProcessing(wrappedRequest, wrappedResponse);
-        
-        Throwable problem = null;
-        
+            throws IOException, ServletException {        
         try {
             System.out.println("filter working,,");
 		HttpServletRequest hreq = (HttpServletRequest)request;
@@ -167,31 +147,15 @@ public class Validator implements Filter {
 			System.out.println("session is null");
 			// RequestDispatcher rd = hreq.getRequestDispatcher("index.html");
 			// rd.forward(request,response);
-			hres.sendRedirect("/Form/index.html");
+			hres.sendRedirect("/Train/user/index.jsp");
 			return ;
 		}
-            chain.doFilter(wrappedRequest, wrappedResponse);
+            chain.doFilter(request, response);
         } catch (Throwable t) {
-            // If an exception is thrown somewhere down the filter chain,
-            // we still want to execute our after processing, and then
-            // rethrow the problem after that.
-            problem = t;
             t.printStackTrace();
         }
         
-        doAfterProcessing(wrappedRequest, wrappedResponse);
-
-        // If there was a problem, we want to rethrow it if it is
-        // a known type, otherwise log it.
-        if (problem != null) {
-            if (problem instanceof ServletException) {
-                throw (ServletException) problem;
-            }
-            if (problem instanceof IOException) {
-                throw (IOException) problem;
-            }
-            sendProcessingError(problem, response);
-        }
+        
     }
 
     /**

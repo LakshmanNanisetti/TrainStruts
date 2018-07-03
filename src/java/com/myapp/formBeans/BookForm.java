@@ -18,17 +18,26 @@ import org.apache.struts.action.*;
  * @author Administrator
  */
 public class BookForm extends ActionForm{
-    private String from,to,trainName;
-    private int day,trainNo;
-    private final Map values = new HashMap();
-    public String getTrainName() {
-        return trainName;
+    private String from,to,category;
+    private int day,trainNo,seats;
+    private final Map passNames = new HashMap();
+    
+    public int getSeats() {
+        return seats;
     }
 
-    public void setTrainName(String trainName) {
-        this.trainName = trainName;
+    public void setSeats(int seats) {
+        this.seats = seats;
+    }
+        
+    public void setCategory(String category) {
+        this.category = category;
     }
 
+    public String getCategory() {
+        return category;
+    }
+    
     public int getTrainNo() {
         return trainNo;
     }
@@ -38,11 +47,11 @@ public class BookForm extends ActionForm{
     }
     
     public void setValue(String key, Object value) {
-        values.put(key, value);
+        passNames.put(key, value);
     }
 
     public Object getValue(String key) {
-        return values.get(key);
+        return passNames.get(key);
     }
 
     public String getFrom() {

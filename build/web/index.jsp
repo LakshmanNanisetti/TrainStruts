@@ -12,8 +12,6 @@
         <title>Login</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="javascript/jquery-3.3.1.js"></script>
-        <script src="javascript/reloader.js"></script>
     </head>
     <body>
         <%
@@ -30,7 +28,7 @@
               <html:errors property="loginMobileError"/>
               <br>
               Password:
-              <html:text property="password"/>
+              <html:password property="password"/>
               <html:errors property="loginPasswordError"/><br>
               <html:submit value="login"/>
           </html:form>
