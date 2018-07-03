@@ -7,6 +7,7 @@
 <%@page import="java.sql.*,java.util.*,com.myapp.logicBeans.Booker"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="html" uri="http://struts.apache.org/tags-html" %>
+<%@taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="com.myapp.formBeans.BookForm"%>
 <%!
     String from;
@@ -59,10 +60,28 @@
 
         </form>
         <script>
-            function createInputs() {
+            function createInputs(){
                 var seats = document.getElementById('seats').value;
                 var temp = "<table>", i = 0, age, gender;
-
+                temp += "<tr><th>S.No</th><th>Name</th><th>Age</th><th>Gender</th></tr>"
+                for (i = 1; i <= seats; i++) {
+                    temp += "<tr>";
+                    temp += "<td>" + i + "</td>";
+                    age = "<td><input id=age" + i + " type=number min=1 name=age" + i + " required></td>";
+                    gender = "<td><select id=gen" + i + " name=gen" + i + " required>" +
+                            "<option value=1>male</option>" +
+                            "<option value=2>female</option></select></td>";
+                    temp += ("<td><input id=pass" + i + " name=pass" + i + " required></td>" + age + gender);
+                    temp += "</tr>";
+                }
+                temp += "</table>"
+                document.getElementById('pass').innerHTML = temp;
+                document.getElementById('submit1').disabled = false;
+                document.getElementById('submit1').style.display = "block";
+            }
+            function createInput() {
+                var seats = document.getElementById('seats').value;
+                var temp = "<table>", i = 0, age, gender;
                 temp += "<tr><th>S.No</th><th>Name</th><th>Age</th><th>Gender</th></tr>"
                 for (i = 1; i <= seats; i++) {
                     temp += "<tr>";

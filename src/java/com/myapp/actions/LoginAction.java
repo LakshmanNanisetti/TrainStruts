@@ -16,8 +16,8 @@ import com.myapp.logicBeans.LoginLogic;
 public class LoginAction extends Action{
     public ActionForward execute(ActionMapping mapping,ActionForm form,HttpServletRequest request,HttpServletResponse response){
         LoginForm lf = (LoginForm) form;
-        String mobile = request.getParameter(lf.getMobile());
-        String password = request.getParameter(lf.getPassword());
+        String mobile = lf.getMobile();
+        String password = lf.getPassword();
         LoginLogic ll = new LoginLogic();
         if(ll.login(mobile, password)){
             HttpSession session = request.getSession();

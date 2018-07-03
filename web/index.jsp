@@ -18,6 +18,7 @@
     <body>
         <%
             if(request.getAttribute("error")!=null){
+                request.setAttribute("error",null);
         %>
         <p style="color:red">Username or password is incorrect</p>
         
