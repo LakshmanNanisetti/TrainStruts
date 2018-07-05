@@ -10,7 +10,8 @@
     <message-resources parameter="com.myapp.msg.msg"/>
     
     <form-beans>
-        <form-bean name="BookForm" type="com.myapp.formBeans.BookForm"/>
+        <form-bean name="TrainForm" type="com.myapp.formBeans.TrainForm"/>
+        <form-bean name="BookForm" type="com.myapp.formBeans.BookForm"/>        
         <form-bean name="LoginForm" type="com.myapp.formBeans.LoginForm"/>
         <form-bean name="RegisterForm" type="com.myapp.formBeans.RegisterForm"/>
     </form-beans>
@@ -24,6 +25,7 @@
         <forward name="success" path="/success.jsp"/>
         <forward name="userHome" path="/user/home.jsp"/>
         <forward name="book" path="/user/book.jsp"/>
+        <forward name="failure" path="/failure.jsp"/>
     </global-forwards>
 
     <action-mappings>
@@ -36,10 +38,11 @@
 		validate="true">
         </action>
         <action input="/user/train.jsp" 
-                name="BookForm" 
+                name="TrainForm" 
                 path="/train" 
                 scope="session" 
-                type="com.myapp.actions.TrainAction"/>
+                type="com.myapp.actions.TrainAction"
+                validate="true"/>
         
         <action input="/index.jsp" 
                 name="LoginForm" 

@@ -18,42 +18,9 @@ import org.apache.struts.action.*;
  * @author Administrator
  */
 public class BookForm extends ActionForm{
-    private String from,to,category;
-    private int day,trainNo,seats;
-    private final Map passNames = new HashMap();
-    
-    public int getSeats() {
-        return seats;
-    }
-
-    public void setSeats(int seats) {
-        this.seats = seats;
-    }
+    private String from,to;
+    private int day;
         
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-    
-    public int getTrainNo() {
-        return trainNo;
-    }
-
-    public void setTrainNo(int trainNo) {
-        this.trainNo = trainNo;
-    }
-    
-    public void setValue(String key, Object value) {
-        passNames.put(key, value);
-    }
-
-    public Object getValue(String key) {
-        return passNames.get(key);
-    }
-
     public String getFrom() {
         return from;
     }
@@ -85,6 +52,7 @@ public class BookForm extends ActionForm{
         if(trains.isEmpty()){
             errors.add("trainNotAvl",new ActionMessage("trainError.notAvl"));
         }
+        
         return errors;
     }
 }

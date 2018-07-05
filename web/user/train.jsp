@@ -16,28 +16,34 @@
     Statement stmt;
     ResultSet rs;
     HashMap<Integer, String> trains;
+    int no=0;
 %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Trains</title>
+        <script src="js/jquery-3.3.1.js"></script>
     </head>
     <body>
-        
-        <%  
-            BookForm travelBean = (BookForm)session.getAttribute("BookForm");
+
+        <%
+            BookForm travelBean = (BookForm) session.getAttribute("BookForm");
             session.setAttribute("day", travelBean.getDay());
             from = travelBean.getFrom();
             to = travelBean.getTo();
             day = travelBean.getDay();
             trains = Booker.getTrains(from, to, day);
         %>
-        <form method="POST" action="/Train/user/update.jsp">
+        <div style="color:red">
+            <html:errors />
+        </div>
+        
+        <html:form method="POST" action="/train.do">
             <div id="hint">
             </div>
             <br />
-            <select name="train">
+            <select name="trainNo">
                 <%
                     for (Map.Entry<Integer, String> me : trains.entrySet()) {
                 %>
@@ -46,18 +52,63 @@
                     }
                 %>
             </select>
-            <select name="category">
-                <option value="ac">AC</option>
-                <option value="sl">SL</option>       
-            </select>
+            <html:select property="category">
+                <html:option value="ac">AC</html:option>
+                <html:option value="sl">SL</html:option>       
+            </html:select>
             <input id="seats" type="number" name="seats" min=1 max=20 value=1 required>
-            <div id="pass"></div>
-            <button type="button" onclick="createInputs()">ok</button>
+            <div id="pass">
+                <table>
+                    <tr><th>S.No</th><th>Name</th><th>Age</th><th>Gender</th></tr>
+                <%  if(session.getAttribute("seats")!=null){
+                        no = (Integer)session.getAttribute("seats");
+                        session.setAttribute("seats",null);
+                    }else{
+                        no=1;
+                        session.setAttribute("seats",null);
+                    }
+                    for(int i=1;i<=no;i++){
+                    String name="value(name"+i+")";
+                    String gen="value(gen"+i+")";
+                    String age="value(age"+i+")";
+                %>
+                    <tr>
+                        <td><%=i%></td>
+                        <td><html:text property="<%=name%>" /></td>
+                        <td><html:text property="<%=age%>"/></td>
+                        <td>
+                            <html:select property="<%=gen%>">
+                                <html:option value="1">Male</html:option>
+                                <html:option value="2">FeMale</html:option>
+                            </html:select>
+                        </td>
+                    </tr>
+                <%}
+                
+                    session.setAttribute("seats",null);
+                %>
+                </table>
+            </div>
+            <button type="button" onclick="getPass()">ok</button>
             <button type="button" onclick="clearInputs()">clear</button><br/>
-            <input id="submit1" type="submit" value="submit" disabled style="display:none">
+            <input id="submit1" type="submit" value="submit">
 
-        </form>
+        </html:form>
         <script>
+            function getPass() {
+                var seats = document.getElementById("seats").value;
+                console.log(seats);
+                var xh = new XMLHttpRequest();
+                xh.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("hint").innerHTML = this.responseText;
+                        $( "#pass" ).load(window.location.href + " #pass" );
+                    }
+                };
+                xh.open("POST", "/Train/user/trainPass.jsp", true);
+                xh.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xh.send("seats=" + seats);
+            }
             function createInputs() {
                 var seats = document.getElementById('seats').value;
                 var temp = "<table>", i = 0, age, gender;
